@@ -1,0 +1,36 @@
+version: "3.9"
+services:
+  minecraft:
+    image: "habanerospices/minecraft-server:latest"
+    restart: always
+    build: .
+    container_name: "minecraft-server"
+    environment:
+      PAPER_VERSION: "1.20.4"
+      MEMORY_SIZE: "1G"
+      PAPER_FLAGS: ""
+    volumes:
+      - "${PWD}/minecraft-data:/data:rw"
+    ports:
+      - "25565:25565"
+      - "24454:24454/udp"
+    # The following allow `docker attach minecraft` to work
+    stdin_open: true
+    tty: true
+
+  filebrowser:
+    image: hurlenko/filebrowser
+    user: "9001:9001"
+    container_name: "minecraft-filebrowser"
+    ports:
+      - 23343:8080
+    volumes:
+      - "${PWD}/minecraft-data/:/data:rw"
+      - "filebrowser-db:/config"
+    environment:
+      - FB_BASEURL=/filebrowser
+    restart: always
+
+volumes:
+  filebrowser-db:
+
