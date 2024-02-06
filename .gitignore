@@ -1,2 +1,6 @@
-docker-compose.yaml
+# Ignore
+docker-compose*.yaml
 minecraft-data/
+
+# Track
+!*.sample

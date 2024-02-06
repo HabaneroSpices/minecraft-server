@@ -1,4 +1,5 @@
 ## Credit: https://github.com/mtoensing/Docker-Minecraft-PaperMC-Server/blob/latest/Dockerfile
+## BUILD STAGE
 FROM eclipse-temurin:20-jre AS build
 RUN apt-get update -y && apt-get install -y curl jq
 
@@ -8,9 +9,10 @@ ARG paper_version=1.20.4
 
 ## Download paper
 WORKDIR /opt/minecraft
-COPY ./get-mcpaper.sh /
+COPY ./scripts/get-mcpaper.sh /
 RUN chmod +x /get-mcpaper.sh && /get-mcpaper.sh ${paper_version}
 
+### RUN STAGE
 ## Run Environment
 FROM eclipse-temurin:20-jre AS runtime
 ARG TARGETARCH
